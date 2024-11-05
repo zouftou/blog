@@ -1,6 +1,7 @@
 package com.alluz.blog.domain.comment;
 
 import com.alluz.blog.domain.AuditableEntity;
+import com.alluz.blog.domain.account.UserAccount;
 import com.alluz.blog.domain.post.Blog;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -14,6 +15,9 @@ public class Comment extends AuditableEntity {
 
     @ManyToOne
     private Blog blog;
+
+    @ManyToOne
+    private UserAccount user;
 
     public String getContent() {
         return content;
@@ -29,6 +33,22 @@ public class Comment extends AuditableEntity {
 
     public void setStatus(CommentStatus status) {
         this.status = status;
+    }
+
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
+    }
+
+    public UserAccount getUser() {
+        return user;
+    }
+
+    public void setUser(UserAccount user) {
+        this.user = user;
     }
 
     public Comment approve() {

@@ -1,8 +1,10 @@
 package com.alluz.blog.domain.post;
 
 import com.alluz.blog.domain.AuditableEntity;
+import com.alluz.blog.domain.account.UserAccount;
 import com.alluz.blog.domain.comment.Comment;
 import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -25,6 +27,9 @@ public class Blog extends AuditableEntity {
 
     @OneToMany(mappedBy="blog")
     private Set<Comment> comments;
+
+    @ManyToOne
+    private UserAccount author;
 
     public String getTitle() {
         return title;
@@ -64,5 +69,21 @@ public class Blog extends AuditableEntity {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public UserAccount getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserAccount author) {
+        this.author = author;
     }
 }
