@@ -3,6 +3,7 @@ package com.alluz.blog.domain.account;
 import com.alluz.blog.domain.AuditableEntity;
 import com.alluz.blog.domain.comment.Comment;
 import com.alluz.blog.domain.post.Blog;
+import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -15,6 +16,18 @@ public class UserAccount extends AuditableEntity {
 
     private String password;
 
+    @Column(name = "display_name")
+    private String displayName;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "locked_account")
+    private boolean lockedAccount;
+
+    @Column(name = "trusted_account")
+    private boolean trustedAccount;
+
     private UserRole[] roles;
 
     @OneToMany(mappedBy="author")
@@ -22,24 +35,6 @@ public class UserAccount extends AuditableEntity {
 
     @OneToMany(mappedBy="user")
     private Set<Comment> comments;
-
-    public boolean isAuthor(){
-        for (UserRole role : getRoles()) {
-            if (role == UserRole.AUTHOR){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isAdmin(){
-        for (UserRole role : getRoles()) {
-            if (role == UserRole.ADMIN){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public String getEmail() {
         return email;
@@ -55,6 +50,38 @@ public class UserAccount extends AuditableEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isLockedAccount() {
+        return lockedAccount;
+    }
+
+    public void setLockedAccount(boolean lockedAccount) {
+        this.lockedAccount = lockedAccount;
+    }
+
+    public boolean isTrustedAccount() {
+        return trustedAccount;
+    }
+
+    public void setTrustedAccount(boolean trustedAccount) {
+        this.trustedAccount = trustedAccount;
     }
 
     public UserRole[] getRoles() {
@@ -79,5 +106,23 @@ public class UserAccount extends AuditableEntity {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public boolean isAuthor(){
+        for (UserRole role : getRoles()) {
+            if (role == UserRole.AUTHOR){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAdmin(){
+        for (UserRole role : getRoles()) {
+            if (role == UserRole.ADMIN){
+                return true;
+            }
+        }
+        return false;
     }
 }
