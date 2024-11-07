@@ -1,5 +1,6 @@
 package com.alluz.blog.domain.comment;
 
+import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.CommentDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,14 @@ public class CommentService {
     }
 
     public Page<CommentDto> getRecentComments(CommentStatus approved, Pageable pageable) {
+        return null;
+    }
+
+    public Page<CommentDto> getComments(BlogDto blog, Pageable pageable) {
+        return null;
+    }
+
+    public CommentDto getComment(Long blogId, Long commentId) {
         return null;
     }
 }

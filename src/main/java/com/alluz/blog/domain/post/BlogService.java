@@ -31,4 +31,8 @@ public class BlogService {
     public Page<BlogDto> getBlogs(Pageable pageable) {
         return null;
     }
+
+    public BlogDto getBlogById(Long blogId) {
+        return null;
+    }
 }
