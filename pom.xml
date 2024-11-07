@@ -12,7 +12,7 @@
 	<artifactId>blog</artifactId>
 	<version>0.0.1</version>
 	<name>blog</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Simple blog website</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>

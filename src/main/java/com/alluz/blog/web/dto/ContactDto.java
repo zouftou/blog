@@ -1,6 +1,6 @@
 package com.alluz.blog.web.dto;
 
-public class ContactForm {
+public class ContactDto {
 
     private String name;
 
