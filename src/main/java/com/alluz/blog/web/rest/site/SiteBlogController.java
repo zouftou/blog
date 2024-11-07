@@ -1,10 +1,7 @@
 package com.alluz.blog.web.rest.site;
 
-import com.alluz.blog.domain.comment.CommentStatus;
 import com.alluz.blog.domain.post.BlogService;
 import com.alluz.blog.web.dto.BlogDto;
-import com.alluz.blog.web.dto.CommentDto;
-import com.alluz.blog.web.dto.UserAccountDto;
 import com.alluz.blog.web.rest.ApiUrls;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
