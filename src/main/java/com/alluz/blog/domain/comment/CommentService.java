@@ -30,4 +30,12 @@ public class CommentService {
     public CommentDto getComment(Long blogId, Long commentId) {
         return null;
     }
+
+    public CommentDto getComment(Long commentId) {
+        return null;
+    }
+
+    public Page<CommentDto> getComments(Pageable pageable) {
+        return null;
+    }
 }
