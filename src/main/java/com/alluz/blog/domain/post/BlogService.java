@@ -16,10 +16,6 @@ public class BlogService {
         this.blogRepository = blogRepository;
     }
 
-    public Page<CommentDto> getUserComments(String userId, CommentStatus commentStatus, Pageable pageable) {
-        return null;
-    }
-
     public BlogDto getLatestBlog() {
         return null;
     }

@@ -60,7 +60,7 @@ public class SiteController {
 
     @RequestMapping(ApiUrls.URL_SITE_PROFILES_USER_COMMENTS)
     public ResponseEntity<Page<CommentDto>> getUserApprovedComments(@PathVariable("userId") String userId, @PageableDefault(size = 10, page = 0) Pageable pageable){
-        Page<CommentDto> comments = this.blogService.getUserComments(userId, CommentStatus.APPROVED,pageable);
+        Page<CommentDto> comments = commentService.getUserComments(userId, CommentStatus.APPROVED,pageable);
         return ResponseEntity.ok(comments);
     }
 
@@ -72,13 +72,13 @@ public class SiteController {
 
     @RequestMapping(ApiUrls.URL_SITE_RECENT_BLOGS)
     public ResponseEntity<Page<BlogDto>> getRecentBlogs(@PageableDefault(size = 3, page = 0) Pageable pageable){
-        Page<BlogDto> blogs = this.blogService.getRecentBlogs(pageable);
+        Page<BlogDto> blogs = blogService.getRecentBlogs(pageable);
         return ResponseEntity.ok(blogs);
     }
 
     @RequestMapping(ApiUrls.URL_SITE_RECENT_COMMENTS)
     public ResponseEntity<Page<CommentDto>> getRecentComments(@PageableDefault(size = 3, page = 0) Pageable pageable){
-        Page<CommentDto> comments = this.commentService.getRecentComments(CommentStatus.APPROVED,pageable);
+        Page<CommentDto> comments = commentService.getRecentComments(CommentStatus.APPROVED,pageable);
         return ResponseEntity.ok(comments);
     }
 

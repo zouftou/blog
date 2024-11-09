@@ -1,6 +1,6 @@
 package com.alluz.blog.web.rest;
 
-import com.alluz.blog.web.exception.ResourceNotFoundException;
+import com.alluz.blog.web.exc.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -38,4 +38,8 @@ public class CommentService {
     public Page<CommentDto> getComments(Pageable pageable) {
         return null;
     }
+
+    public Page<CommentDto> getUserComments(String userId, CommentStatus commentStatus, Pageable pageable) {
+        return null;
+    }
 }

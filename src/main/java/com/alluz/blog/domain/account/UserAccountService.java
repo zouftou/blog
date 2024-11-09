@@ -32,4 +32,19 @@ public class UserAccountService {
     public Page<UserAccountDto> getUserAccounts(Pageable pageable) {
         return null;
     }
+
+    public void saveUserAccount(UserAccountDto user) {
+    }
+
+    public void addRole(Long userId, UserRole userRole) {
+
+    }
+
+    public void removeRole(Long userId, UserRole userRole) {
+
+    }
+
+    public UserAccountDto getUserAccount(Long userId) {
+        return null;
+    }
 }
