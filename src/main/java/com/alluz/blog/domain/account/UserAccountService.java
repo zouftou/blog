@@ -4,6 +4,8 @@ import com.alluz.blog.web.dto.UserAccountDto;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +26,10 @@ public class UserAccountService {
     }
 
     public UserAccountDto getUserAccountById(Long userId) {
+        return null;
+    }
+
+    public Page<UserAccountDto> getUserAccounts(Pageable pageable) {
         return null;
     }
 }

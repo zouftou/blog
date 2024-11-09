@@ -19,17 +19,13 @@ public class SiteCommentController {
 
     private final CommentService commentService;
 
-    private final BlogService blogService;
-
-    public SiteCommentController(CommentService commentService, BlogService blogService) {
+    public SiteCommentController(CommentService commentService) {
         this.commentService = commentService;
-        this.blogService = blogService;
     }
 
     @RequestMapping(ApiUrls.URL_SITE_BLOGS_BLOG_COMMENTS)
     public ResponseEntity<Page<CommentDto>> getComments(@PathVariable("blogId") Long blogId, @PageableDefault(size = 10, page = 0) Pageable pageable){
-        BlogDto blog = blogService.getBlogById(blogId);
-        Page<CommentDto> comments = commentService.getComments(blog, pageable);
+        Page<CommentDto> comments = commentService.getComments(blogId, pageable);
         return ResponseEntity.ok(comments);
     }
 

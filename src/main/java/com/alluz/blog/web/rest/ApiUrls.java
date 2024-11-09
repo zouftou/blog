@@ -5,6 +5,7 @@ public interface ApiUrls {
     String API_ROOT = "/api";
     String API_VERSION_1 = "/v1";
 
+    String URL_SITE = "/public";
     String URL_SITE_CURRENT_USER = "/public/currentUser";
     String URL_SITE_PROFILES_USER = "/public/profiles/{userId}";
     String URL_SITE_PROFILES_USER_COMMENTS = "/public/profiles/{userId}/comments";

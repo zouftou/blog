@@ -23,7 +23,7 @@ public class CommentService {
         return null;
     }
 
-    public Page<CommentDto> getComments(BlogDto blog, Pageable pageable) {
+    public Page<CommentDto> getComments(Long blogId, Pageable pageable) {
         return null;
     }
 

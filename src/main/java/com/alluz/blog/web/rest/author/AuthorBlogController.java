@@ -22,7 +22,7 @@ public class AuthorBlogController {
     }
 
     @RequestMapping(ApiUrls.URL_AUTHOR_BLOGS)
-    public ResponseEntity<Page<BlogDto>> getRecentComments(@PageableDefault(size = 10, page = 0) Pageable pageable){
+    public ResponseEntity<Page<BlogDto>> getBlogs(@PageableDefault(size = 10, page = 0) Pageable pageable){
         Page<BlogDto> blogs = blogService.getBlogs(pageable);
         return ResponseEntity.ok(blogs);
     }
