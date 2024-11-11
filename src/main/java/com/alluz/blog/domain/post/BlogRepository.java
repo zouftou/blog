@@ -8,5 +8,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 
     Page<Blog> findByPublishedIsTrueOrderByPublishedTimeDesc(Pageable pageable);
 
+    Blog findFirstByPublishedIsTrueOrderByPublishedTimeDesc();
+
     int countByPublishedIsTrue();
 }

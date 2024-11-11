@@ -23,16 +23,9 @@ public class BlogService {
         this.modelMapper = modelMapper;
     }
 
-    public BlogDto getLatestBlog(Pageable pageable) {
-        Page<Blog> blogs = blogRepository.findByPublishedIsTrueOrderByPublishedTimeDesc(pageable);
-        List<BlogDto> blogsList = blogs.stream().map(blog -> modelMapper.map(blog, BlogDto.class)).toList();
-        return blogsList.get(0);
-    }
-
-    public Page<BlogDto> getRecentBlogs(Pageable pageable) {
-        Page<Blog> blogs = blogRepository.findByPublishedIsTrueOrderByPublishedTimeDesc(pageable);
-        List<BlogDto> blogsList = blogs.stream().map(blog -> modelMapper.map(blog, BlogDto.class)).toList();
-        return new PageImpl<>(blogsList);
+    public BlogDto getLatestBlog() {
+        Blog blog = blogRepository.findFirstByPublishedIsTrueOrderByPublishedTimeDesc();
+        return modelMapper.map(blog, BlogDto.class);
     }
 
     public Page<BlogDto> getBlogs(Pageable pageable) {
