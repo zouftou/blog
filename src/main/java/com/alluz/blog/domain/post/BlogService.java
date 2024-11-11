@@ -1,34 +1,52 @@
 package com.alluz.blog.domain.post;
 
-import com.alluz.blog.domain.comment.CommentStatus;
 import com.alluz.blog.web.dto.BlogDto;
-import com.alluz.blog.web.dto.CommentDto;
+import com.alluz.blog.web.exc.ResourceNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlogService {
 
     private final BlogRepository blogRepository;
 
-    public BlogService(BlogRepository blogRepository) {
+    private final ModelMapper modelMapper;
+
+    public BlogService(BlogRepository blogRepository, ModelMapper modelMapper) {
         this.blogRepository = blogRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public BlogDto getLatestBlog() {
-        return null;
+    public BlogDto getLatestBlog(Pageable pageable) {
+        Page<Blog> blogs = blogRepository.findByPublishedIsTrueOrderByPublishedTimeDesc(pageable);
+        List<BlogDto> blogsList = blogs.stream().map(blog -> modelMapper.map(blog, BlogDto.class)).toList();
+        return blogsList.get(0);
     }
 
     public Page<BlogDto> getRecentBlogs(Pageable pageable) {
-        return null;
+        Page<Blog> blogs = blogRepository.findByPublishedIsTrueOrderByPublishedTimeDesc(pageable);
+        List<BlogDto> blogsList = blogs.stream().map(blog -> modelMapper.map(blog, BlogDto.class)).toList();
+        return new PageImpl<>(blogsList);
     }
 
     public Page<BlogDto> getBlogs(Pageable pageable) {
-        return null;
+        Page<Blog> blogs = blogRepository.findByPublishedIsTrueOrderByPublishedTimeDesc(pageable);
+        List<BlogDto> blogsList = blogs.stream().map(blog -> modelMapper.map(blog, BlogDto.class)).toList();
+        return new PageImpl<>(blogsList);
     }
 
     public BlogDto getBlogById(Long blogId) {
-        return null;
+        Optional<Blog> blog = blogRepository.findById(blogId);
+        if (blog.isPresent()){
+            return modelMapper.map(blog.get(), BlogDto.class);
+        }else{
+            throw new ResourceNotFoundException("Blog","blogId", blogId);
+        }
     }
 }

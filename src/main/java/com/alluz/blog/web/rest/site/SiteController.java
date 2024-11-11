@@ -65,8 +65,8 @@ public class SiteController {
     }
 
     @RequestMapping(ApiUrls.URL_SITE_LATEST_BLOG)
-    public ResponseEntity<BlogDto> getLatestBlog(){
-        BlogDto blog = blogService.getLatestBlog();
+    public ResponseEntity<BlogDto> getLatestBlog(@PageableDefault(size = 1, page = 0) Pageable pageable){
+        BlogDto blog = blogService.getLatestBlog(pageable);
         return ResponseEntity.ok(blog);
     }
 
