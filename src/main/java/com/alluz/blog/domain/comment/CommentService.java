@@ -4,8 +4,11 @@ import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.CommentDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -36,7 +39,9 @@ public class CommentService {
     }
 
     public Page<CommentDto> getComments(Pageable pageable) {
-        return null;
+        Page<Comment> comments = commentRepository.findAll(pageable);
+        List<CommentDto> commentsList = comments.stream().map(comment -> modelMapper.map(comment, CommentDto.class)).toList();
+        return new PageImpl<>(commentsList);
     }
 
     public Page<CommentDto> getUserComments(String userId, CommentStatus commentStatus, Pageable pageable) {
