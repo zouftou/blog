@@ -38,7 +38,7 @@ public class AdminCommentController {
 
     @RequestMapping(ApiUrls.URL_ADMIN_COMMENTS_COMMENT)
     public ResponseEntity<CommentDto> getComment(@PathVariable("commentId") Long commentId) {
-        CommentDto comment = commentService.getComment(commentId);
+        CommentDto comment = commentService.getCommentById(commentId);
         return ResponseEntity.ok(comment);
     }
 }

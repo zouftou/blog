@@ -2,6 +2,7 @@ package com.alluz.blog.domain.comment;
 
 import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.CommentDto;
+import com.alluz.blog.web.exc.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -34,8 +36,13 @@ public class CommentService {
         return null;
     }
 
-    public CommentDto getComment(Long commentId) {
-        return null;
+    public CommentDto getCommentById(Long commentId) {
+        Optional<Comment> comment = commentRepository.findById(commentId);
+        if (comment.isPresent()){
+            return modelMapper.map(comment.get(), CommentDto.class);
+        }else{
+            throw new ResourceNotFoundException("Comment","commentId",commentId);
+        }
     }
 
     public Page<CommentDto> getComments(Pageable pageable) {
