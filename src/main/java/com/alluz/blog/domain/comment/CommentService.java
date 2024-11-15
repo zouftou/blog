@@ -1,5 +1,7 @@
 package com.alluz.blog.domain.comment;
 
+import com.alluz.blog.domain.post.Blog;
+import com.alluz.blog.domain.post.BlogRepository;
 import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.CommentDto;
 import com.alluz.blog.web.exc.ResourceNotFoundException;
@@ -17,10 +19,13 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
+    private final BlogRepository blogRepository;
+
     private final ModelMapper modelMapper;
 
-    public CommentService(CommentRepository commentRepository, ModelMapper modelMapper) {
+    public CommentService(CommentRepository commentRepository, BlogRepository blogRepository, ModelMapper modelMapper) {
         this.commentRepository = commentRepository;
+        this.blogRepository = blogRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -29,11 +34,28 @@ public class CommentService {
     }
 
     public Page<CommentDto> getComments(Long blogId, Pageable pageable) {
-        return null;
+        Optional<Blog> blog = blogRepository.findById(blogId);
+        if (blog.isPresent()){
+            Page<Comment> comments = commentRepository.findAll(pageable);
+            List<CommentDto> commentsList = comments.stream().map(comment -> modelMapper.map(comment, CommentDto.class)).toList();
+            return new PageImpl<>(commentsList);
+        }else{
+            throw new ResourceNotFoundException("Blog","blogId", blogId);
+        }
     }
 
     public CommentDto getComment(Long blogId, Long commentId) {
-        return null;
+        Optional<Blog> blog = blogRepository.findById(blogId);
+        if (blog.isPresent()){
+            Optional<Comment> comment = commentRepository.findById(commentId);
+            if (comment.isPresent()){
+                return modelMapper.map(comment.get(), CommentDto.class);
+            }else{
+                throw new ResourceNotFoundException("Comment","commentId",commentId);
+            }
+        }else{
+            throw new ResourceNotFoundException("Blog","blogId", blogId);
+        }
     }
 
     public CommentDto getCommentById(Long commentId) {
