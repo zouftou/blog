@@ -30,7 +30,9 @@ public class CommentService {
     }
 
     public Page<CommentDto> getRecentComments(CommentStatus approved, Pageable pageable) {
-        return null;
+        Page<Comment> comments = commentRepository.findByStatusOrderByCreatedTimeDesc(approved,pageable);
+        List<CommentDto> commentsList = comments.stream().map(comment -> modelMapper.map(comment, CommentDto.class)).toList();
+        return new PageImpl<>(commentsList);
     }
 
     public Page<CommentDto> getComments(Long blogId, Pageable pageable) {
