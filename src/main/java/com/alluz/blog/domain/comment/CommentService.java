@@ -38,7 +38,7 @@ public class CommentService {
     public Page<CommentDto> getComments(Long blogId, Pageable pageable) {
         Optional<Blog> blog = blogRepository.findById(blogId);
         if (blog.isPresent()){
-            Page<Comment> comments = commentRepository.findAll(pageable);
+            Page<Comment> comments = commentRepository.findByBlogIdOrderByCreatedTimeDesc(blogId,pageable);
             List<CommentDto> commentsList = comments.stream().map(comment -> modelMapper.map(comment, CommentDto.class)).toList();
             return new PageImpl<>(commentsList);
         }else{
