@@ -1,9 +1,5 @@
-package com.alluz.blog.web.mail;
+package com.alluz.blog.domain.email;
 
-import com.alluz.blog.web.dto.BlogDto;
-import com.alluz.blog.web.dto.CommentDto;
-import com.alluz.blog.web.dto.ContactDto;
-import com.alluz.blog.web.dto.UserAccountDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;

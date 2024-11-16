@@ -1,4 +1,4 @@
-package com.alluz.blog.web.mail;
+package com.alluz.blog.domain.email;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
