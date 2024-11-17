@@ -1,8 +1,6 @@
 package com.alluz.blog.web.rest.admin;
 
 import com.alluz.blog.domain.account.UserAccountService;
-import com.alluz.blog.domain.post.BlogService;
-import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.UserAccountDto;
 import com.alluz.blog.web.rest.ApiUrls;
 import org.springframework.data.domain.Page;
@@ -15,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiUrls.API_ROOT + ApiUrls.API_VERSION_1)
-public class UserAccountController {
+public class AdminUserAccountController {
 
     private final UserAccountService userAccountService;
 
-    public UserAccountController(UserAccountService userAccountService) {
+    public AdminUserAccountController(UserAccountService userAccountService) {
         this.userAccountService = userAccountService;
     }
 

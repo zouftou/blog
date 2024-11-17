@@ -3,7 +3,7 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://blog_db:5432/blogdb}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/blogdb}
     username: ${POSTGRES_USER:admin}
     password: ${POSTGRES_PASS:admin}
   jpa:

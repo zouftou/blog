@@ -1,10 +1,10 @@
-INSERT INTO users (id,email,password,display_name,roles,locked_account,trusted_account)
+INSERT INTO accounts (id,email,password,display_name,roles,locked_account,trusted_account)
 VALUES (1,'admin@blog.com','Passwd12345','Admin', ARRAY [0,2], false,true);
 
-INSERT INTO users (id,email,password,display_name, roles,locked_account,trusted_account)
+INSERT INTO accounts (id,email,password,display_name, roles,locked_account,trusted_account)
 VALUES (2,'author@blog.com','Passwd12345','Author', ARRAY [1,2], false,true);
 
-INSERT INTO users (id,email,password,display_name,roles,locked_account,trusted_account)
+INSERT INTO accounts (id,email,password,display_name,roles,locked_account,trusted_account)
 VALUES (3,'user@blog.com','Passwd12345','User', ARRAY [2],false,true);
 
 INSERT INTO blogs (id,title,content,published,tags,published_time,created_time,author_id)

@@ -3,14 +3,12 @@ package com.alluz.blog.domain.post;
 import com.alluz.blog.domain.AuditableEntity;
 import com.alluz.blog.domain.account.UserAccount;
 import com.alluz.blog.domain.comment.Comment;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Set;
 
+@Entity
 @Table(name = "blogs")
 public class Blog extends AuditableEntity {
 
