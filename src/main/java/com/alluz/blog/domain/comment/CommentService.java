@@ -2,9 +2,8 @@ package com.alluz.blog.domain.comment;
 
 import com.alluz.blog.domain.post.Blog;
 import com.alluz.blog.domain.post.BlogRepository;
-import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.CommentDto;
-import com.alluz.blog.web.exc.ResourceNotFoundException;
+import com.alluz.blog.web.exp.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

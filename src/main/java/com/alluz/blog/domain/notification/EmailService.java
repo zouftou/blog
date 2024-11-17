@@ -1,4 +1,4 @@
-package com.alluz.blog.domain.email;
+package com.alluz.blog.domain.notification;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

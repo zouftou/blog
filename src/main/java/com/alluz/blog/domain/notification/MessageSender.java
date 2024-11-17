@@ -1,12 +1,9 @@
-package com.alluz.blog.web.rest;
+package com.alluz.blog.domain.notification;
 
 import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.CommentDto;
 import com.alluz.blog.web.dto.ContactDto;
 import com.alluz.blog.web.dto.UserAccountDto;
-import com.alluz.blog.domain.email.EmailMessage;
-import com.alluz.blog.domain.email.EmailProperties;
-import com.alluz.blog.domain.email.EmailService;
 import org.springframework.stereotype.Service;
 
 @Service

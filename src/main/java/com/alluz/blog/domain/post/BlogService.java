@@ -1,7 +1,7 @@
 package com.alluz.blog.domain.post;
 
 import com.alluz.blog.web.dto.BlogDto;
-import com.alluz.blog.web.exc.ResourceNotFoundException;
+import com.alluz.blog.web.exp.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

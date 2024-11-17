@@ -4,7 +4,7 @@ import com.alluz.blog.domain.account.UserAccountService;
 import com.alluz.blog.domain.comment.CommentService;
 import com.alluz.blog.domain.comment.CommentStatus;
 import com.alluz.blog.domain.post.BlogService;
-import com.alluz.blog.web.rest.MessageSender;
+import com.alluz.blog.domain.notification.MessageSender;
 import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.dto.CommentDto;
 import com.alluz.blog.web.dto.ContactDto;

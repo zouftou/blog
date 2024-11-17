@@ -1,4 +1,4 @@
-package com.alluz.blog.web.exc;
+package com.alluz.blog.web.exp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

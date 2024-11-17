@@ -1,4 +1,4 @@
-package com.alluz.blog.domain.email;
+package com.alluz.blog.domain.notification;
 
 public class EmailMessage {
 

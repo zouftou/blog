@@ -3,7 +3,7 @@ package com.alluz.blog.web.rest.user;
 import com.alluz.blog.domain.account.UserAccountService;
 import com.alluz.blog.domain.account.UserRole;
 import com.alluz.blog.web.dto.UserAccountDto;
-import com.alluz.blog.web.exc.ResourceNotFoundException;
+import com.alluz.blog.web.exp.ResourceNotFoundException;
 import com.alluz.blog.web.rest.ApiUrls;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
