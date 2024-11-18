@@ -10,3 +10,10 @@ spring:
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
+
+application:
+  mail:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "devzouftou@gmail.com"
+    password: ${APPLICATION_MAIL:xxxxxx}

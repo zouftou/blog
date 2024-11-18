@@ -1,6 +1,7 @@
 package com.alluz.blog.config;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,6 +12,18 @@ import java.util.Properties;
 @Configuration
 public class ApplicationConfig {
 
+    @Value("${application.main.host}")
+    private String host;
+
+    @Value("${application.main.port}")
+    private int port;
+
+    @Value("${application.main.username}")
+    private String username;
+
+    @Value("${application.main.password}")
+    private String password;
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -19,11 +32,11 @@ public class ApplicationConfig {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setHost(host);
+        mailSender.setPort(port);
 
-        mailSender.setUsername("devzouftou@gmail.com");
-        mailSender.setPassword("xxxxxxxxxxxxxxxxx");
+        mailSender.setUsername(username);
+        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
