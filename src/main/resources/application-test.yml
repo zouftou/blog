@@ -17,3 +17,7 @@ application:
     port: 587
     username: "devzouftou@gmail.com"
     password: ${APPLICATION_MAIL:xxxxxx}
+    systemName: Zouftou Blog
+    systemEmail: system@zouftoublog.com
+    adminName: Zouftou Admin
+    adminEmail: admin@zouftoublog.com
