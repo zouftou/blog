@@ -77,4 +77,12 @@ public class CommentService {
     public Page<CommentDto> getUserComments(String userId, CommentStatus commentStatus, Pageable pageable) {
         return null;
     }
+
+    public int countComments(Long blogId, CommentStatus commentStatus) {
+        return commentRepository.countByBlogIdAndStatus(blogId,commentStatus);
+    }
+
+    public int countComments(Long blogId) {
+        return commentRepository.countByBlogId(blogId);
+    }
 }
