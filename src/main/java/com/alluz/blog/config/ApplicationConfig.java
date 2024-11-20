@@ -12,16 +12,16 @@ import java.util.Properties;
 @Configuration
 public class ApplicationConfig {
 
-    @Value("${application.main.host}")
+    @Value("${application.mail.host}")
     private String host;
 
-    @Value("${application.main.port}")
+    @Value("${application.mail.port}")
     private int port;
 
-    @Value("${application.main.username}")
+    @Value("${application.mail.username}")
     private String username;
 
-    @Value("${application.main.password}")
+    @Value("${application.mail.password}")
     private String password;
 
     @Bean
