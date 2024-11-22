@@ -19,6 +19,7 @@ public interface ApiUrls {
     String URL_SITE_BLOGS_BLOG = "/public/blogs/{blogId}";
     String URL_SITE_BLOGS_BLOG_COMMENTS = "/public/blogs/{blogId}/comments";
     String URL_SITE_BLOGS_BLOG_COMMENTS_COMMENT = "/public/blogs/{blogId}/comments/{commentId}";
+    String URL_SITE_BLOGS_BLOG_COMMENTS_COUNT = "/public/blogs/{blogId}/comments/count";
 
     String URL_USER = "/user";
     String URL_USER_PROFILE = "/user/profile";

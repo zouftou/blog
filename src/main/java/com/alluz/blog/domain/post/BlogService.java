@@ -1,5 +1,6 @@
 package com.alluz.blog.domain.post;
 
+import com.alluz.blog.domain.comment.CommentStatus;
 import com.alluz.blog.web.dto.BlogDto;
 import com.alluz.blog.web.exp.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -41,5 +42,9 @@ public class BlogService {
         }else{
             throw new ResourceNotFoundException("Blog","blogId", blogId);
         }
+    }
+
+    public int countBlogs() {
+        return blogRepository.countByPublishedIsTrue();
     }
 }

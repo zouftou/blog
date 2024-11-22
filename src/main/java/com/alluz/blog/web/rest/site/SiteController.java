@@ -101,4 +101,9 @@ public class SiteController {
         messageSender.notifyAdminForContactMessage(contactForm);
         return ResponseEntity.ok("");
     }
+
+    @GetMapping(ApiUrls.URL_SITE_BLOGS_BLOG_COMMENTS_COUNT)
+    public long countComments(@RequestParam Long blogId) {
+        return commentService.countComments(blogId);
+    }
 }
