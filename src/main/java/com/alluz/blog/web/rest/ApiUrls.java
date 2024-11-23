@@ -16,6 +16,7 @@ public interface ApiUrls {
     String URL_SITE_TAG_CLOUDS = "/public/tagClouds";
     String URL_SITE_CONTACT = "/public/contact";
     String URL_SITE_BLOGS = "/public/blogs";
+    String URL_SITE_BLOGS_COUNT = "/public/blogs/count";
     String URL_SITE_BLOGS_BLOG = "/public/blogs/{blogId}";
     String URL_SITE_BLOGS_BLOG_COMMENTS = "/public/blogs/{blogId}/comments";
     String URL_SITE_BLOGS_BLOG_COMMENTS_COMMENT = "/public/blogs/{blogId}/comments/{commentId}";

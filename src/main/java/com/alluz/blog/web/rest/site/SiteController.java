@@ -106,4 +106,9 @@ public class SiteController {
     public long countComments(@RequestParam Long blogId) {
         return commentService.countComments(blogId);
     }
+
+    @GetMapping(ApiUrls.URL_SITE_BLOGS_COUNT)
+    public int countBlogs() {
+        return blogService.countBlogs();
+    }
 }
