@@ -86,4 +86,13 @@ public class UserAccountService {
         UserAccount savedAccount = userAccountRepository.save(account);
         return  modelMapper.map(savedAccount, UserAccountDto.class);
     }
+
+    public UserAccountDto getUserAccountById(Long userId) {
+        Optional<UserAccount> account = userAccountRepository.findById(userId);
+        if(account.isPresent()){
+            return modelMapper.map(account, UserAccountDto.class);
+        }else {
+            throw new ResourceNotFoundException(UserAccount.class.getName(),"userId",userId);
+        }
+    }
 }
