@@ -16,7 +16,7 @@ application:
     host: "smtp.gmail.com"
     port: 587
     username: "devzouftou@gmail.com"
-    password: ${APPLICATION_MAIL:xxxxxx}
+    password: ${APPLICATION_MAIL_PASSWORD:xxxxxx}
     systemName: Zouftou Blog
     systemEmail: system@zouftoublog.com
     adminName: Zouftou Admin
