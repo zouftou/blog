@@ -1,6 +1,6 @@
 package com.alluz.blog.domain.account;
 
-import com.zouftou.blog.web.dto.UserAccountDto;
+import com.alluz.blog.web.dto.UserAccountDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;

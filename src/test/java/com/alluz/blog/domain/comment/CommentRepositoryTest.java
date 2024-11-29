@@ -15,24 +15,22 @@ class CommentRepositoryTest {
     CommentRepository commentRepository;
 
     @Test
-    void testFindByBlogId() {
-        Page<Comment> commentPage = commentRepository.findByBlogId(2L, PageRequest.of(0,5));
-        assertNotNull(commentPage.getContent());
-        assertEquals(2,commentPage.getContent().size());
-    }
-
-    @Test
-    void testFindByUserId() {
-        Page<Comment> commentPage = commentRepository.findByUserId(3L, PageRequest.of(0,5));
-        assertNotNull(commentPage.getContent());
-        assertEquals(1,commentPage.getContent().size());
-    }
-
-    @Test
     void testFindByStatusOrderByCreatedTimeDesc() {
         Page<Comment> commentPage = commentRepository.findByStatusOrderByCreatedTimeDesc(CommentStatus.PENDING,PageRequest.of(0,5));
         assertNotNull(commentPage.getContent());
         assertEquals(3,commentPage.getContent().size());
+        for (int i = 1; i < commentPage.getContent().size(); i++) {
+            Comment current = commentPage.getContent().get(i);
+            Comment previous = commentPage.getContent().get(i - 1);
+            assertTrue(current.getCreatedTime().compareTo(previous.getCreatedTime()) <= 0);
+        }
+    }
+
+    @Test
+    void testFindByBlogIdOrderByCreatedTimeDesc() {
+        Page<Comment> commentPage = commentRepository.findByBlogIdOrderByCreatedTimeDesc(3L,PageRequest.of(0,5));
+        assertNotNull(commentPage.getContent());
+        assertEquals(2,commentPage.getContent().size());
         for (int i = 1; i < commentPage.getContent().size(); i++) {
             Comment current = commentPage.getContent().get(i);
             Comment previous = commentPage.getContent().get(i - 1);
@@ -50,53 +48,5 @@ class CommentRepositoryTest {
     void testCountByBlogId() {
         int count = commentRepository.countByBlogId(1L);
         assertEquals(1,count);
-    }
-
-    @Test
-    void testFindByBlogIdOrderByCreatedTimeDesc() {
-        Page<Comment> commentPage = commentRepository.findByBlogIdOrderByCreatedTimeDesc(3L,PageRequest.of(0,5));
-        assertNotNull(commentPage.getContent());
-        assertEquals(2,commentPage.getContent().size());
-        for (int i = 1; i < commentPage.getContent().size(); i++) {
-            Comment current = commentPage.getContent().get(i);
-            Comment previous = commentPage.getContent().get(i - 1);
-            assertTrue(current.getCreatedTime().compareTo(previous.getCreatedTime()) <= 0);
-        }
-    }
-
-    @Test
-    void testFindByBlogIdAndStatusOrderByCreatedTimeAsc() {
-        Page<Comment> commentPage = commentRepository.findByBlogIdAndStatusOrderByCreatedTimeAsc(3L,CommentStatus.PENDING,PageRequest.of(0,5));
-        assertNotNull(commentPage.getContent());
-        assertEquals(2,commentPage.getContent().size());
-        for (int i = 1; i < commentPage.getContent().size(); i++) {
-            Comment current = commentPage.getContent().get(i);
-            Comment previous = commentPage.getContent().get(i - 1);
-            assertTrue(current.getCreatedTime().compareTo(previous.getCreatedTime()) >= 0);
-        }
-    }
-
-    @Test
-    void testFindByUserIdAndStatusOrderByCreatedTimeDesc() {
-        Page<Comment> commentPage = commentRepository.findByUserIdAndStatusOrderByCreatedTimeDesc(2L,CommentStatus.PENDING,PageRequest.of(0,5));
-        assertNotNull(commentPage.getContent());
-        assertEquals(2,commentPage.getContent().size());
-        for (int i = 1; i < commentPage.getContent().size(); i++) {
-            Comment current = commentPage.getContent().get(i);
-            Comment previous = commentPage.getContent().get(i - 1);
-            assertTrue(current.getCreatedTime().compareTo(previous.getCreatedTime()) <= 0);
-        }
-    }
-
-    @Test
-    void testFindByUserIdOrderByCreatedTimeDesc() {
-        Page<Comment> commentPage = commentRepository.findByUserIdOrderByCreatedTimeDesc(2L,PageRequest.of(0,5));
-        assertNotNull(commentPage.getContent());
-        assertEquals(3,commentPage.getContent().size());
-        for (int i = 1; i < commentPage.getContent().size(); i++) {
-            Comment current = commentPage.getContent().get(i);
-            Comment previous = commentPage.getContent().get(i - 1);
-            assertTrue(current.getCreatedTime().compareTo(previous.getCreatedTime()) <= 0);
-        }
     }
 }

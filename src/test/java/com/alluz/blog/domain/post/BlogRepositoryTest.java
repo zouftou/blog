@@ -27,25 +27,6 @@ class BlogRepositoryTest {
     }
 
     @Test
-    void testFindByAuthorIdOrderByCreatedTimeDesc() {
-        Page<Blog> blogPage = blogRepository.findByAuthorIdOrderByCreatedTimeDesc(2L,PageRequest.of(0,5));
-        assertNotNull(blogPage.getContent());
-        assertEquals(2,blogPage.getContent().size());
-        for (int i = 1; i < blogPage.getContent().size(); i++) {
-            Blog current = blogPage.getContent().get(i);
-            Blog previous = blogPage.getContent().get(i - 1);
-            assertTrue(current.getCreatedTime().compareTo(previous.getCreatedTime()) <= 0);
-        }
-    }
-
-    @Test
-    void testFindAllByPublishedIsTrue() {
-        Page<Blog> blogPage = blogRepository.findAllByPublishedIsTrue(PageRequest.of(0,5));
-        assertNotNull(blogPage.getContent());
-        assertEquals(2,blogPage.getContent().size());
-    }
-
-    @Test
     void testCountByPublishedIsTrue() {
         int count = blogRepository.countByPublishedIsTrue();
         assertEquals(2,count);

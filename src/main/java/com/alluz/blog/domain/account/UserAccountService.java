@@ -33,6 +33,13 @@ public class UserAccountService {
         return modelMapper.map(account, UserAccountDto.class);
     }
 
+    public UserAccountDto createUserAccount(UserAccountDto userAccountDto) {
+        UserAccount account = modelMapper.map(userAccountDto, UserAccount.class);
+        LOGGER.info(String.format("A new user is created (userId='%s') for '%s' with email '%s'.", account.getId(), account.getDisplayName(), account.getEmail()));
+        UserAccount savedAccount = userAccountRepository.save(account);
+        return modelMapper.map(savedAccount, UserAccountDto.class);
+    }
+
     public UserAccountDto getUserAccountByEmail(String email) {
         Optional<UserAccount> account = userAccountRepository.findByEmail(email);
         if(account.isPresent()){
