@@ -1,5 +1,7 @@
 package com.alluz.blog.domain.account;
 
+import com.alluz.blog.domain.comment.Comment;
+import com.alluz.blog.domain.comment.CommentStatus;
 import com.alluz.blog.web.dto.UserAccountDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,12 +9,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -85,6 +93,21 @@ class UserAccountServiceTest {
 
     @Test
     void getUserAccounts() {
+        UserAccount account1 = new UserAccount();
+        UserAccountDto accountDto1 = new UserAccountDto();
+        UserAccount account2 = new UserAccount();
+
+        List<UserAccount> userAccountList = new ArrayList<>();
+        userAccountList.add(account1);
+        userAccountList.add(account2);
+
+        when(userAccountRepository.findAllByOrderById(any(Pageable.class))).thenReturn(new PageImpl<>(userAccountList));
+        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(account1);
+        when(modelMapper.map(any(UserAccount.class),eq(UserAccountDto.class))).thenReturn(accountDto1);
+
+        Page<UserAccount> userAccountPage = userAccountRepository.findAllByOrderById(PageRequest.of(0,5));
+        assertNotNull(userAccountPage.getContent());
+        assertEquals(2,userAccountPage.getContent().size());
     }
 
     @Test
