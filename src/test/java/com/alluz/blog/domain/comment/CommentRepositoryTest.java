@@ -39,6 +39,18 @@ class CommentRepositoryTest {
     }
 
     @Test
+    void testFindByUserIdAndStatusOrderByCreatedTimeDesc() {
+        Page<Comment> commentPage = commentRepository.findByUserIdAndStatusOrderByCreatedTimeDesc(3L,CommentStatus.APPROVED,PageRequest.of(0,5));
+        assertNotNull(commentPage.getContent());
+        assertEquals(2,commentPage.getContent().size());
+        for (int i = 1; i < commentPage.getContent().size(); i++) {
+            Comment current = commentPage.getContent().get(i);
+            Comment previous = commentPage.getContent().get(i - 1);
+            assertTrue(current.getCreatedTime().compareTo(previous.getCreatedTime()) <= 0);
+        }
+    }
+
+    @Test
     void testCountByBlogIdAndStatus() {
         int count = commentRepository.countByBlogIdAndStatus(2L,CommentStatus.APPROVED);
         assertEquals(1,count);

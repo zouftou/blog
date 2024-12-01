@@ -59,7 +59,7 @@ public class SiteController {
     }
 
     @RequestMapping(ApiUrls.URL_SITE_PROFILES_USER_COMMENTS)
-    public ResponseEntity<Page<CommentDto>> getUserApprovedComments(@PathVariable("userId") String userId, @PageableDefault(size = 10, page = 0) Pageable pageable){
+    public ResponseEntity<Page<CommentDto>> getUserApprovedComments(@PathVariable("userId") Long userId, @PageableDefault(size = 10, page = 0) Pageable pageable){
         Page<CommentDto> comments = commentService.getUserComments(userId, CommentStatus.APPROVED,pageable);
         return ResponseEntity.ok(comments);
     }

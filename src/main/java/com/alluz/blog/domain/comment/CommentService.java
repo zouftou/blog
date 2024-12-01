@@ -74,8 +74,10 @@ public class CommentService {
         return new PageImpl<>(commentsList);
     }
 
-    public Page<CommentDto> getUserComments(String userId, CommentStatus commentStatus, Pageable pageable) {
-        return null;
+    public Page<CommentDto> getUserComments(Long authorId,CommentStatus approved, Pageable pageable) {
+        Page<Comment> comments = commentRepository.findByUserIdAndStatusOrderByCreatedTimeDesc(authorId,approved,pageable);
+        List<CommentDto> commentsList = comments.stream().map(comment -> modelMapper.map(comment, CommentDto.class)).toList();
+        return new PageImpl<>(commentsList);
     }
 
     public int countComments(Long blogId, CommentStatus commentStatus) {
