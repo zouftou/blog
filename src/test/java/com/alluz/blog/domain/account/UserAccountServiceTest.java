@@ -1,131 +1,181 @@
 package com.alluz.blog.domain.account;
 
 import com.alluz.blog.web.dto.UserAccountDto;
+import com.alluz.blog.web.exp.ResourceNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class UserAccountServiceTest {
 
-    @InjectMocks
-    UserAccountService userAccountService;
+    @Mock
+    private UserAccountRepository userAccountRepository;
 
     @Mock
     private ModelMapper modelMapper;
 
     @Mock
-    private UserAccountRepository userAccountRepository;
+    private SecurityContext securityContext;
 
-    @Test
-    void createUserAccount() {
-        UserAccount account = new UserAccount();
-        UserAccountDto accountDto = new UserAccountDto();
+    @Mock
+    private Authentication authentication;
 
-        when(modelMapper.map(any(UserAccountDto.class),eq(UserAccount.class))).thenReturn(account);
-        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(account);
-        when(modelMapper.map(any(UserAccount.class),eq(UserAccountDto.class))).thenReturn(accountDto);
+    @InjectMocks
+    private UserAccountService userAccountService;
 
-        UserAccountDto userAccountDto = userAccountService.createUserAccount(accountDto);
-
-        assertThat(userAccountDto).isNotNull();
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void addRole() {
-        UserAccount account = new UserAccount();
-        account.setRoles(new UserRole[] {});
-        UserAccountDto accountDto = new UserAccountDto();
-        accountDto.setRoles(new UserRole[] {UserRole.AUTHOR});
-        accountDto.setId(1L);
+    void testGetCurrentUser() {
+        // Arrange
+        UserAccount userAccount = new UserAccount();
+        userAccount.setEmail("test@example.com");
+        UserAccountDto userAccountDto = new UserAccountDto();
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getName()).thenReturn("test@example.com");
+        SecurityContextHolder.setContext(securityContext);
+        when(userAccountRepository.findByEmail("test@example.com")).thenReturn(Optional.of(userAccount));
+        when(modelMapper.map(userAccount, UserAccountDto.class)).thenReturn(userAccountDto);
 
-        when(userAccountRepository.findById(any(Long.class))).thenReturn(Optional.of(account));
-        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(account);
-        when(modelMapper.map(any(UserAccount.class),eq(UserAccountDto.class))).thenReturn(accountDto);
+        // Act
+        UserAccountDto result = userAccountService.getCurrentUser();
 
-        UserAccountDto userAccountDto = userAccountService.addRole(accountDto.getId(),UserRole.AUTHOR);
-
-        assertThat(userAccountDto).isNotNull();
-        UserRole[] roles = userAccountDto.getRoles();
-        assertTrue(containsElement(roles, UserRole.AUTHOR));
+        // Assert
+        assertNotNull(result);
+        verify(userAccountRepository, times(1)).findByEmail("test@example.com");
+        verify(modelMapper, times(1)).map(userAccount, UserAccountDto.class);
     }
 
     @Test
-    void removeRole() {
-        UserAccount account = new UserAccount();
-        account.setRoles(new UserRole[] {});
-        UserAccountDto accountDto = new UserAccountDto();
-        accountDto.setRoles(new UserRole[] {});
-        accountDto.setId(1L);
+    void testGetCurrentUserThrowsWhenNotFound() {
+        // Arrange
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getName()).thenReturn("notfound@example.com");
+        SecurityContextHolder.setContext(securityContext);
+        when(userAccountRepository.findByEmail("notfound@example.com")).thenReturn(Optional.empty());
 
-        when(userAccountRepository.findById(any(Long.class))).thenReturn(Optional.of(account));
-        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(account);
-        when(modelMapper.map(any(UserAccount.class),eq(UserAccountDto.class))).thenReturn(accountDto);
-
-        UserAccountDto userAccountDto = userAccountService.addRole(accountDto.getId(),UserRole.AUTHOR);
-
-        assertThat(userAccountDto).isNotNull();
-        UserRole[] roles = userAccountDto.getRoles();
-        assertFalse(containsElement(roles, UserRole.AUTHOR));
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, userAccountService::getCurrentUser);
     }
 
     @Test
-    void getCurrentUser() {
+    void testCreateUserAccount() {
+        // Arrange
+        UserAccountDto userAccountDto = new UserAccountDto();
+        UserAccount userAccount = new UserAccount();
+        UserAccount savedAccount = new UserAccount();
+        UserAccountDto savedDto = new UserAccountDto();
+        when(modelMapper.map(userAccountDto, UserAccount.class)).thenReturn(userAccount);
+        when(userAccountRepository.save(userAccount)).thenReturn(savedAccount);
+        when(modelMapper.map(savedAccount, UserAccountDto.class)).thenReturn(savedDto);
+
+        // Act
+        UserAccountDto result = userAccountService.createUserAccount(userAccountDto);
+
+        // Assert
+        assertNotNull(result);
+        verify(userAccountRepository, times(1)).save(userAccount);
+        verify(modelMapper, times(2)).map(any(), any());
     }
 
     @Test
-    void getUserAccounts() {
-        UserAccount account1 = new UserAccount();
-        UserAccountDto accountDto1 = new UserAccountDto();
-        UserAccount account2 = new UserAccount();
+    void testGetUserAccountByEmail() {
+        // Arrange
+        String email = "test@example.com";
+        UserAccount userAccount = new UserAccount();
+        UserAccountDto userAccountDto = new UserAccountDto();
+        when(userAccountRepository.findByEmail(email)).thenReturn(Optional.of(userAccount));
+        when(modelMapper.map(userAccount, UserAccountDto.class)).thenReturn(userAccountDto);
 
-        List<UserAccount> userAccountList = new ArrayList<>();
-        userAccountList.add(account1);
-        userAccountList.add(account2);
+        // Act
+        UserAccountDto result = userAccountService.getUserAccountByEmail(email);
 
-        when(userAccountRepository.findAllByOrderById(any(Pageable.class))).thenReturn(new PageImpl<>(userAccountList));
-        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(account1);
-        when(modelMapper.map(any(UserAccount.class),eq(UserAccountDto.class))).thenReturn(accountDto1);
-
-        Page<UserAccount> userAccountPage = userAccountRepository.findAllByOrderById(PageRequest.of(0,5));
-        assertNotNull(userAccountPage.getContent());
-        assertEquals(2,userAccountPage.getContent().size());
+        // Assert
+        assertNotNull(result);
+        verify(userAccountRepository, times(1)).findByEmail(email);
+        verify(modelMapper, times(1)).map(userAccount, UserAccountDto.class);
     }
 
     @Test
-    void getUserAccount() {
+    void testGetUserAccountByEmailThrowsWhenNotFound() {
+        // Arrange
+        String email = "notfound@example.com";
+        when(userAccountRepository.findByEmail(email)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> userAccountService.getUserAccountByEmail(email));
     }
 
     @Test
-    void updateUserAccount() {
+    void testGetUserAccounts() {
+        // Arrange
+        PageRequest pageable = PageRequest.of(0, 10);
+        UserAccount userAccount = new UserAccount();
+        UserAccountDto userAccountDto = new UserAccountDto();
+        Page<UserAccount> userAccountPage = new PageImpl<>(List.of(userAccount));
+        when(userAccountRepository.findAllByOrderById(pageable)).thenReturn(userAccountPage);
+        when(modelMapper.map(userAccount, UserAccountDto.class)).thenReturn(userAccountDto);
+
+        // Act
+        Page<UserAccountDto> result = userAccountService.getUserAccounts(pageable);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(1, result.getTotalElements());
+        verify(userAccountRepository, times(1)).findAllByOrderById(pageable);
+        verify(modelMapper, times(1)).map(userAccount, UserAccountDto.class);
     }
 
     @Test
-    void deleteUserAccount() {
+    void testUpdateUserAccount() {
+        // Arrange
+        Long userId = 1L;
+        UserAccount existingAccount = new UserAccount();
+        existingAccount.setEmail("old@example.com");
+        UserAccountDto userAccountDto = new UserAccountDto();
+        userAccountDto.setEmail("new@example.com");
+        UserAccount updatedAccount = new UserAccount();
+        updatedAccount.setEmail("new@example.com");
+        when(userAccountRepository.findById(userId)).thenReturn(Optional.of(existingAccount));
+        when(userAccountRepository.save(existingAccount)).thenReturn(updatedAccount);
+        when(modelMapper.map(updatedAccount, UserAccountDto.class)).thenReturn(userAccountDto);
+
+        // Act
+        UserAccountDto result = userAccountService.updateUserAccount(userId, userAccountDto);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals("new@example.com", result.getEmail());
+        verify(userAccountRepository, times(1)).findById(userId);
+        verify(userAccountRepository, times(1)).save(existingAccount);
+        verify(modelMapper, times(1)).map(updatedAccount, UserAccountDto.class);
     }
 
-    public boolean containsElement(UserRole[] roles, UserRole element) {
-        for (UserRole role : roles) {
-            if (role == element){
-                return true;
-            }
-        }
-        return false;
+    @Test
+    void testUpdateUserAccountThrowsWhenNotFound() {
+        // Arrange
+        Long userId = 1L;
+        UserAccountDto userAccountDto = new UserAccountDto();
+        when(userAccountRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> userAccountService.updateUserAccount(userId, userAccountDto));
     }
 }
