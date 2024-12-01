@@ -1,7 +1,5 @@
 package com.alluz.blog.domain.account;
 
-import com.alluz.blog.domain.comment.Comment;
-import com.alluz.blog.domain.comment.CommentStatus;
 import com.alluz.blog.web.dto.UserAccountDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
