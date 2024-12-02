@@ -2,19 +2,22 @@ package com.alluz.blog.domain.notification;
 
 public class EmailMessage {
 
-    private final String fromEmail;
+    private  String fromEmail;
 
-    private final String fromName;
+    private  String fromName;
 
-    private final String toEmail;
+    private  String toEmail;
 
-    private final String toName;
+    private  String toName;
 
-    private final String subject;
+    private  String subject;
 
-    private final String body;
+    private  String body;
 
-    private final String replyTo;
+    private  String replyTo;
+
+    public EmailMessage(){
+    }
 
     public EmailMessage(EmailProperties properties, String subject, String body, String replyTo) {
         this.fromEmail = properties.getSystemEmail();
@@ -63,5 +66,33 @@ public class EmailMessage {
 
     public String getReplyTo() {
         return replyTo;
+    }
+
+    public void setFromEmail(String fromEmail) {
+        this.fromEmail = fromEmail;
+    }
+
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
+    }
+
+    public void setToName(String toName) {
+        this.toName = toName;
+    }
+
+    public void setToEmail(String toEmail) {
+        this.toEmail = toEmail;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setReplyTo(String replyTo) {
+        this.replyTo = replyTo;
     }
 }
